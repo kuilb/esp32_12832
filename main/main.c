@@ -8,9 +8,9 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#include "st7567_driver/st7567_hw.h"
-#include "display_gfx/display_gfx.h"
-#include "display_gfx/font.h"
+#include "st7567_hw.h"
+#include "display_gfx.h"
+#include "font.h"
 
 void app_main() {
     LCD_Init();

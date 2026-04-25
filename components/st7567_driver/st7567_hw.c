@@ -6,7 +6,7 @@
  * @date 2026-04-22
  * */
 
-#include "st7567_driver/st7567_hw.h"
+#include "include/st7567_hw.h"
 
 #include "driver/gpio.h"
 #include "freertos/FreeRTOS.h"

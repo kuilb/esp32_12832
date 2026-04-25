@@ -6,7 +6,7 @@
  * @date 2026-04-24
  * */
 
- #include "display_gfx/display_gfx.h"
+ #include "display_gfx.h"
 
 #ifndef LCD_WIDTH
 #define LCD_WIDTH   128

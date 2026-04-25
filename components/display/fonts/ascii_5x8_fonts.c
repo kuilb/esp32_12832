@@ -6,7 +6,7 @@
  * @date 2026-04-24
  * */
 
-#include "display_gfx/font.h"
+#include "font.h"
 #include <stdint.h>
 
 const uint8_t ascii_5x8_data[95][5] = {

@@ -13,9 +13,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "display_gfx/font.h"
-#include "display_gfx/display_gfx.h"
-#include "st7567_driver/st7567_hw.h"
+#include "font.h"
+#include "st7567_hw.h"
 
 typedef enum {
     GFX_COLOR_BLACK = 0, // 灭（通常对应数据 0）
