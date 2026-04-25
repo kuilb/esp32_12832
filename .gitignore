@@ -5,3 +5,4 @@
 .vscode/ipch
 sdkconfig.esp32-12832
 sdkconfig.esp32-c6-devkitc-1
+COMMITMSG
