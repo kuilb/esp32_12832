@@ -1,8 +1,7 @@
 /**
  * @file display_gfx.c
  * @author Kulib
- * @brief 定义显示图形相关的接口
- * @version 0.1
+ * @brief 定义显示图形相关的接口,同时管理帧缓冲区
  * @date 2026-04-24
  * */
 
@@ -172,13 +171,23 @@ void draw_ascii_char(uint16_t x, uint16_t y, char c,  font_t font, gfx_color_t c
 
     // 统一按列取模：每列占 ceil(height/8) 个字节，bit0 在顶部。
     uint8_t bytes_per_col = (font.height + 7U) / 8U;
+    
+    // 8x5 字体特殊处理：在中间空一个像素
+    bool is_8x5_font = (font.width == 8 && font.height == 5);
+    
     for (uint8_t col = 0; col < font.width; col++) {
+        // 计算实际绘制 x 坐标
+        uint16_t draw_x = x + col;
+        if (is_8x5_font && col >= 4) {
+            draw_x++;  // 从第 5 列开始，往右偏移 1 像素，形成中间空隙
+        }
+        
         for (uint8_t row = 0; row < font.height; row++) {
             uint8_t page = row / 8U;
             uint8_t bit = row % 8U;
             uint8_t col_data = char_data[col * bytes_per_col + page];
             if (col_data & (1U << bit)) {
-                draw_pixel(x + col, y + row, color);
+                draw_pixel(draw_x, y + row, color);
             }
         }
     }
@@ -187,7 +196,14 @@ void draw_ascii_char(uint16_t x, uint16_t y, char c,  font_t font, gfx_color_t c
 void draw_ascii_string(uint16_t x, uint16_t y, const char *str, font_t font, gfx_color_t color) {
     while (*str) {
         draw_ascii_char(x, y, *str, font, color);
-        x += font.width; // 字符宽度
+        
+        // 8x5 字体特殊处理：字符间距 = 8 + 1（中间空隙）= 9
+        uint16_t advance = font.width;
+        if (font.width == 8 && font.height == 5) {
+            advance = 9;
+        }
+        
+        x += advance;
         str++;
     }
 }

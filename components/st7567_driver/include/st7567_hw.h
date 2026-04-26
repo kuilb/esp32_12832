@@ -2,8 +2,7 @@
  * @file st7567_hw.h
  * @author Kulib
  * @brief 声明 ST7567 屏幕的硬件接口
- * @version 0.1
- * @date 2026-04-24
+ * @date 2026-04-26
  * */
 
 #ifndef ST7567_HW_H
@@ -72,6 +71,18 @@ void LCD_Init(); // 初始化屏幕
  * @note 该函数会直接写入 LCD 数据寄存器，清空整个显示区域，需要自行同步帧缓冲区状态（如果有的话）
  */
 void LCD_Clear(); // 清屏
+
+/**
+ * @brief 设置对比度
+ * @param contrast 对比度,取值为 0 - 63
+ */
+void LCD_set_contrast(uint8_t contrast);
+
+/**
+ * @brief 设置行偏移
+ * @param offset 行偏移,取值为 0 - 63 
+ */
+void LCD_set_col_offset(uint8_t offset);
 
 /**
  * @brief 将帧缓冲区内容刷新到屏幕

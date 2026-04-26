@@ -2,8 +2,7 @@
  * @file st7567_hw.c
  * @author Kulib
  * @brief 定义 ST7567 (12832) 屏幕的驱动接口
- * @version 0.1
- * @date 2026-04-22
+ * @date 2026-04-26
  * */
 
 #include "include/st7567_hw.h"
@@ -21,9 +20,10 @@ typedef struct {
     uint8_t ev_level;       // 驱动电压等级 (对比度相关) 0x00~0x3F
     uint8_t col_offset;     // 列起始偏移
     uint8_t inverse;        // 反显控制 0:正常,  1:反显
+    uint8_t contrast;       // 对比度控制 (0-5)
 } lcd_cfg_t;
 
-static const lcd_cfg_t lcd_cfg = {
+static lcd_cfg_t lcd_cfg = {
     .seg_remap    = LCD_SEG_REMAP,
     .com_reverse  = LCD_COM_REVERSE,
     .bias_1_7     = LCD_BIAS_1_7,
@@ -116,6 +116,25 @@ void LCD_Clear() {
             _lcd_write_data(0x00);
         }
     }
+}
+
+void LCD_set_contrast(uint8_t contrast){
+    if(contrast > 63){
+        return;
+    }
+    uint8_t ev_level = contrast %  0x3F;
+    // printf("ev: %d, ratio: %d\n",ev_level,reg_ratio);
+    lcd_cfg.ev_level = ev_level;
+    _lcd_write_cmd(CMD_SET_EV_MODE);                          // (18) EV 双字节指令第一字节
+    _lcd_write_cmd(ev_level & 0x3F);                     //      EV 值
+}
+
+void LCD_set_col_offset(uint8_t offset){
+    if(offset > 63){
+        return;
+    }
+    lcd_cfg.col_offset = offset;
+    _lcd_write_cmd(CMD_SET_START_LINE | offset);                       // (2)  起始行 0
 }
 
 static void _lcd_apply_config(const lcd_cfg_t *cfg) {

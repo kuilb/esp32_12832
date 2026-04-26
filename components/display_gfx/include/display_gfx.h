@@ -2,7 +2,6 @@
  * @file display_gfx.h
  * @author Kulib
  * @brief 定义显示图形相关的接口
- * @version 0.1
  * @date 2026-04-24
  * */
 

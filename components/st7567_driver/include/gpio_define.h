@@ -2,7 +2,6 @@
  * @file gpio_define.h
  * @author Kulib
  * @brief 定义 12832 屏幕的 GPIO 引脚
- * @version 0.1
  * @date 2026-04-22
  * */
 #ifndef GPIO_DEFINE_H
